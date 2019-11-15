@@ -1,0 +1,91 @@
+﻿@model AirAjencyy.Models.PlaneTicket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PlaneTicket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryOrigin.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryOrigin.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TakeOffDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TakeOffDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityDestinationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityDestinationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descriptions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descriptions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryDestinationCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryDestinationCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CityOriginCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CityOriginCode)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

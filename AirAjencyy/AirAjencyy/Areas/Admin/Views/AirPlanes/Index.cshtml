@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AirAjencyy.Models.AirPlane>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+}
+
+<div class="text-center" style="border-style:solid;">
+	<h2 style="font-size:medium">مدیریت  نوع هواپیما</h2>
+</div>
+<br />
+<p>
+
+
+
+<p>
+
+	<a class="btn btn-success" href="/Admin/AirPlanes/Create">ثبت جدید</a>
+
+</p>
+@using ((Html.BeginForm("Index",
+						"AirPlanes",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+	<input class="form-control" name="name" style="width:40%" placeholder="بر اساس مدل هواپیما جستجو کنید " />
+	<button type="submit" class="btn btn-primary" style="margin-top:10px">جستجو</button>
+}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover text-center">
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.airPlaneModel)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.ImageUrl)
+						</th>
+						<th>
+							عملیات
+						</th>
+					</tr>
+
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.airPlaneModel)
+							</td>
+
+							@if (item.ImageUrl != null)
+							{
+								<td>
+									<img style="width:60px;height:50px;" src="~/Upload/Plane/@item.ImageUrl" />
+								</td>
+							}
+							@if (item.ImageUrl == null)
+							{
+								<td>
+									بدون عکس
+								</td>
+							}
+
+							<td>
+								<a class="btn btn-primary" href="/Admin/AirPlanes/Edit/@item.Id"> ویرایش</a> |
+
+								<a class="btn btn-danger" href="/Admin/AirPlanes/Delete/@item.Id"> حذف</a>
+							</td>
+						</tr>
+					}
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

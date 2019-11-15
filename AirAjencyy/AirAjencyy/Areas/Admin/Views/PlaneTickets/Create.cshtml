@@ -1,0 +1,186 @@
+﻿@model AirAjencyy.Models.PlaneTicket
+
+@{
+	AirAjencyy.Models.AirAjencyyContext db = new AirAjencyy.Models.AirAjencyyContext();
+	ViewBag.Title = "Create";
+	Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+
+	var listCity = db.Cities.Select(s => new { s.Id, s.Name }).ToList();
+	var listCountry = db.Countries.Select(s => new { s.Id, s.Name }).ToList();
+
+	var listAirPlane = db.AirPlanes.Select(s => new { s.Id, s.airPlaneModel }).ToList();
+}
+
+
+
+@using ((Html.BeginForm("Create",
+						"PlaneTickets",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+
+				<div class="text-center text-blue" style="border-style:solid;">
+					<h2>ثبت رزرو بلیط</h2>
+				</div>
+
+				<div class="form-horizontal">
+
+					<hr />
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+					<div class="form-group">
+						@Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<select class="form-control" style="width:50%">
+								<option value="0">داخلی</option>
+								<option value="1">خارجی</option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.TakeOffDate, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<input name="mydate" id="TakeOffDate" class="form-control" style="width:50%" />
+
+							@Html.ValidationMessageFor(model => model.TakeOffDate, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+
+
+
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.CountryOriginID, "کشورمبدا", htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.DropDownList("CountryOriginID", null, htmlAttributes: new { @class = "form-control", @style = "width:50%" })
+							@Html.ValidationMessageFor(model => model.CountryOriginID, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.CityOriginCode, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<select class="form-control" style="width:50%" name="CityOriginCode">
+								@foreach (var item in listCity)
+								{
+									<option value="@item.Id">@item.Name</option>
+								}
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.AirPlaneCode, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<select class="form-control" style="width:50%" name="AirPlaneCode">
+								@foreach (var item in listAirPlane)
+								{
+									<option value="@item.Id">@item.airPlaneModel</option>
+								}
+							</select>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.CountryDestinationCode, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<select class="form-control" style="width:50%" name="CountryDestinationCode">
+								@foreach (var item in listCountry)
+								{
+									<option value="@item.Id">@item.Name</option>
+								}
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.CityDestinationID, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<select class="form-control" style="width:50%" name="CityDestinationID">
+								@foreach (var item in listCity)
+								{
+									<option value="@item.Id">@item.Name</option>
+								}
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Descriptions, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.EditorFor(model => model.Descriptions, new { htmlAttributes = new { @class = "form-control", @style = "width:50%" } })
+							@Html.ValidationMessageFor(model => model.Descriptions, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @style = "width:50%" } })
+							@Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+						</div>
+					</div>
+					<div class="form-group">
+						@Html.LabelFor(model => model.TakeOffTime, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<input name="TakeOffTime" style="width:50%" type="time" />
+							@Html.ValidationMessageFor(model => model.TakeOffTime, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+
+
+					<div class="form-group">
+						@Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							<input style="width:712px;width:50%" name="Main_Image" type="file" class="form-control" id="Main_Image_Upload" onchange="setImage()">
+							<br />
+							<img alt="بدون تصویر" id="Main_Image_Show" style="width:150px;height:150px;margin-right:50px" src="" />
+						</div>
+					</div>
+
+					<div class="form-group" style="margin-left:90%;">
+						<div class="col-md-offset-2 col-md-10">
+							<input type="submit" value="ثبت" class="btn btn-success" style="margin-bottom:5px;" />
+						</div>
+						<p class="text-danger" style="margin-right:20px;">
+							@TempData["AirTicketError"]
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+<div>
+	<a class="btn btn-warning" href="/Admin/PlaneTickets/Index"> بازگشت</a>
+</div>
+
+<link href="~/Areas/Css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Areas/Css/jquery-ui-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Areas/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Areas/scripts/jquery-ui.js"></script>
+<script src="~/Areas/scripts/PersianDateTimePicker/jquery-ui-datetimepicker.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$("#TakeOffDate").datepicker();
+	});
+</script>
+<script>
+
+	function setImage() {
+
+		var myURL = window.URL || window.webkitURL;
+		var fileURL = myURL.createObjectURL(Main_Image_Upload.files[0]);
+		Main_Image_Show.src = fileURL;
+	}
+</script>

@@ -1,0 +1,62 @@
+﻿@{
+	ViewBag.Title = "Home Page";
+
+	AirAjencyy.Models.AirAjencyyContext db = new AirAjencyy.Models.AirAjencyyContext();
+	var listTickets = db.PlaneTickets.Select(s => s).ToList();
+}
+
+
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+						<h2>Cheap Airline Tickets Shop !</h2>
+						<p>Thanks to CheapAir, you can book the most comfortable and cheapest flights to your favorite cities. .</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+
+				@*<div class="col-lg-4 col-md-4 col-sm-6">
+					<a href="images/img_1.jpg" class="fh5co-card-item image-popup">
+						<figure>
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img src="images/img_1.jpg" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<h2>New York, USA</h2>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia..</p>
+							<p><span class="btn btn-primary">Schedule a Trip</span></p>
+						</div>
+					</a>
+				</div>*@
+				@foreach (var item in listTickets)
+				{
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<a href="~/TicketInfo/Index/@item.Id" class="fh5co-card-item ">
+							<figure>
+								<div class="overlay"><i class="ti-plus"></i></div>
+								<img src="~/Upload/Tickets/@item.ImageUrl" alt="Image" class="img-responsive">
+							</figure>
+							<div class="fh5co-text">
+
+								<p style="font-family:Tahoma,'B Yekan'">@item.Descriptions</p>
+								<p style="font-family:Tahoma,'B Yekan'"><span class="btn btn-primary">مشاهده و رزور</span></p>
+							</div>
+						</a>
+					</div>
+
+				}
+
+
+
+
+
+
+
+			</div>
+		</div>
+		
+	</div>
+

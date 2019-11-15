@@ -1,0 +1,36 @@
+﻿
+@{
+	ViewBag.Title = "AcceptAndCountinue";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+		<h3 style="font-family:Tahoma,'B Yekan';margin-top:20px;"><img style="height:400px;margin-left:auto;margin-right:auto" src="~/MyImages/img_532171.png" /></h3>
+		<div style="margin-top:60px;margin-left:auto;margin-right:auto">
+			@using ((Html.BeginForm("CustomerFactor",
+							"TicketInfo",
+							FormMethod.Post)))
+			{
+				<label style="float:right">:نام و نام خانوادگی</label>
+				<input required name="CustomerName" class="form-control" style="direction:rtl" />
+				<label style="float:right">:همراه</label>
+				<input required type="number" name="Mobile" class="form-control" style="direction:rtl" />
+				<label style="float:right">:نشانی</label>
+				<input required name="Address" class="form-control" style="direction:rtl" />
+				<input name="PlaneTicketID"  style="display:none;" value="@ViewBag.IdTicket"/>
+				<div class="form-group" style="margin-left:90%;margin-top:20px;">
+					<div class="col-md-offset-2 col-md-10 ">
+						<input type="submit" value="ثبت" class="btn btn-success" style="margin-bottom:5px;font-family:Tahoma,'B Yekan'" />
+				
+					</div>
+				
+				</div>
+			}
+		</div>
+
+	</div>
+
+</div>
+
+

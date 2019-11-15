@@ -1,0 +1,253 @@
+﻿@model IEnumerable<AirAjencyy.Models.PlaneTicket>
+
+@{
+
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+}
+@{
+	AirAjencyy.Models.AirAjencyyContext db = new AirAjencyy.Models.AirAjencyyContext();
+	var listCity = db.Cities.Select(s => new { s.Id, s.Name }).ToList();
+	var listCountry = db.Countries.Select(s => new { s.Id, s.Name }).ToList();
+
+	var listAirPlane = db.AirPlanes.Select(s => new { s.Id, s.airPlaneModel }).ToList();
+}
+<div class="text-center" style="border-style:solid;">
+	<h2 style="font-size:medium">مدیریت رزرو بلیط</h2>
+</div>
+<br />
+<p>
+
+
+
+<p>
+
+	<a class="btn btn-success" href="/Admin/PlaneTickets/Create">ثبت جدید</a>
+
+</p>
+@using ((Html.BeginForm("Index",
+						"PlaneTickets",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+<div class="row">
+	<input style="display:none" value="1" name="hasSearch"/>
+	<input class="form-control" name="price" style="width:40%;margin-right:35px;" placeholder="براساس قیمت" />
+	<div class="form-group">
+
+		<div class="col-md-10">
+			<select class="form-control" style="width:50%;margin-top:5px;margin-right:20px;" name="Type">
+				<option value="0">داخلی</option>
+				<option value="1">خارجی</option>
+
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+
+		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+			<input required name="TakeOffDate" id="TakeOffDate" class="form-control" style="width:50%" placeholder="تاریخ" />
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+			<label>کشورمبدا:</label>
+			<select class="form-control" style="width:50%" name="OriginCountryCode">
+				@foreach (var item in listCountry)
+				{
+					<option value="@item.Id">@item.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+			<label>شهرمبدا:</label>
+			<select class="form-control" style="width:50%" name="OriginCityCode">
+				@foreach (var item in listCity)
+				{
+					<option value="@item.Id">@item.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+			<label>کشورمقصد:</label>
+			<select class="form-control" style="width:50%" name="DestinyCountryCode">
+				@foreach (var item in listCountry)
+				{
+					<option value="@item.Id">@item.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+			<label>استان مقصد:</label>
+			<select class="form-control" style="width:50%" name="DestinyCityCode">
+				@foreach (var item in listCity)
+				{
+					<option value="@item.Id">@item.Name</option>
+				}
+			</select>
+		</div>
+	</div>
+</div>
+
+	<button type="submit" class="btn btn-primary" style="margin-top:10px">جستجو</button>
+}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover text-center">
+					<tr>
+
+						<th>
+							@Html.DisplayNameFor(model => model.Type)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.TakeOffDate)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.TakeOffTime)
+						</th>
+						<th>
+							کشور مبدا
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.CountryDestinationCode)
+						</th>
+
+						<th>
+							@Html.DisplayNameFor(model => model.CityOriginCode)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.CityDestinationID)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.ImageUrl)
+						</th>
+
+						<th>
+							@Html.DisplayNameFor(model => model.Descriptions)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Price)
+						</th>
+
+						<th>امکانات</th>
+					</tr>
+
+					@foreach (var item in Model)
+					{
+						<tr>
+							@if (item.Type == 0)
+							{
+								<td>
+									داخلی
+								</td>
+							}
+							@if (item.Type == 1)
+							{
+								<td>
+									خارجی
+								</td>
+							}
+
+							<td>
+
+								@AirAjencyy.Utility.DateChanger.ToPersianDateString(item.TakeOffDate)
+							</td>
+							<td>
+								@item.TakeOffTime
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.CountryOrigin.Name)
+							</td>
+							<td>
+								@{
+									var CountryDestinationName = db.Countries.Where(s => s.Id == item.CountryDestinationCode).FirstOrDefault();
+								}
+								@if (CountryDestinationName != null)
+								{
+
+									<p>
+										@CountryDestinationName.Name
+									</p>
+								}
+
+							</td>
+							<td>
+								@{
+									var CityOriginOriginName = db.Cities.Where(s => s.Id == item.CityOriginCode).FirstOrDefault();
+								}
+								@if (CityOriginOriginName != null)
+								{
+									<p>
+										@CityOriginOriginName.Name
+									</p>
+								}
+
+							</td>
+							<td>
+								@{
+									var CityDestiName = db.Cities.Where(s => s.Id == item.CityDestinationID).FirstOrDefault();
+								}
+								@if (CityDestiName != null)
+								{
+									<p>
+
+										@CityDestiName.Name
+									</p>
+								}
+
+							</td>
+
+							<td>
+								<img style="width:60px;width:60px;height:50px;" src="~/Upload/Tickets/@item.ImageUrl" />
+							</td>
+							@if (item.Descriptions != null)
+							{
+								<td>
+									@Html.DisplayFor(modelItem => item.Descriptions)
+								</td>
+							}
+							@if (item.Descriptions == null)
+							{
+								<td>
+									فاقد توضیح
+								</td>
+							}
+							<td>
+								@Html.DisplayFor(modelItem => item.Price)
+							</td>
+
+
+							<td>
+								<a class="btn btn-primary" href="/Admin/PlaneTickets/Edit/@item.Id"> ویرایش</a> |
+
+								<a class="btn btn-danger" href="/Admin/PlaneTickets/Delete/@item.Id"> حذف</a>
+							</td>
+						</tr>
+
+					}
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<link href="~/Areas/Css/jquery-ui.css" rel="stylesheet" />
+<link href="~/Areas/Css/jquery-ui-datetimepicker.min.css" rel="stylesheet" />
+<script src="~/Areas/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Areas/scripts/jquery-ui.js"></script>
+<script src="~/Areas/scripts/PersianDateTimePicker/jquery-ui-datetimepicker.min.js"></script>
+
+
+<script>
+	$(document).ready(function () {
+		$("#TakeOffDate").datepicker();
+	});
+</script>

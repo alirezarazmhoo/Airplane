@@ -1,0 +1,66 @@
+﻿@model IEnumerable<AirAjencyy.Models.City>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+}
+
+<div class="text-center" style="border-style:solid;">
+	<h2 style="font-size:medium">مدیریت استان ها</h2>
+</div>
+<br />
+<p>
+
+
+
+<p>
+
+	<a class="btn btn-success" href="/Admin/Cities/Create">ثبت جدید</a>
+
+</p>
+@using ((Html.BeginForm("Index",
+						"Cities",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+	<input class="form-control" name="name" style="width:40%" placeholder="بر اساس نام کشور یا شهر جستجو کنید" />
+	<button type="submit" class="btn btn-primary" style="margin-top:10px">جستجو</button>
+}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover text-center">
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Country.Name)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Name)
+						</th>
+						<th>
+							عملیات
+						</th>
+					</tr>
+
+					@foreach (var item in Model)
+					{
+						<tr>
+							<td>
+								@Html.DisplayFor(modelItem => item.Country.Name)
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.Name)
+							</td>
+							<td>
+								<a class="btn btn-primary" href="/Admin/Cities/Edit/@item.Id"> ویرایش</a> |
+
+								<a class="btn btn-danger" href="/Admin/Cities/Delete/@item.Id"> حذف</a>
+							</td>
+						</tr>
+					}
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

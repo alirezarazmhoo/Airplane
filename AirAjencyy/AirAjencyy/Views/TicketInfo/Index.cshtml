@@ -1,0 +1,70 @@
+﻿@model AirAjencyy.Models.PlaneTicket
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	AirAjencyy.Models.AirAjencyyContext db = new AirAjencyy.Models.AirAjencyyContext();
+}
+
+
+
+<div>
+
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+			<h3 style="font-family:Tahoma,'B Yekan';margin-top:100px;"><img src="~/Upload/Tickets/@Model.ImageUrl" style="width:100%;height:250px;"/></h3>
+			<div style="margin-top:60px;margin-left:auto;margin-right:auto">
+
+				<label style="float:right"> از کشور </label>
+				@{
+					var OrigingCountry = db.Countries.Where(s => s.Id == Model.CountryOriginID).FirstOrDefault();
+				}
+				<p>@OrigingCountry.Name</p>
+				<label style="float:right">از استان </label>
+				@{
+					var originCity = db.Cities.Where(s => s.Id == Model.CityOriginCode).FirstOrDefault();
+				}
+				<p>@originCity.Name</p>
+
+				<label style="float:right">به کشور </label>
+				@{
+					var DestiCountry = db.Countries.Where(s => s.Id == Model.CountryDestinationCode).FirstOrDefault();
+				}
+				<p>@DestiCountry.Name</p>
+				<label style="float:right">به استان </label>
+				@{
+					var DestiCity = db.Cities.Where(s => s.Id == Model.CityDestinationID).FirstOrDefault();
+				}
+				<p>@DestiCity.Name</p>
+				<label style="float:right">تاریخ پرواز </label>
+				<p>@AirAjencyy.Utility.DateChanger.ToPersianDateString(Model.TakeOffDate)</p>
+				<label style="float:right">ساعت پرواز</label>
+				<p>@Model.TakeOffTime</p>
+				<label style="float:right">نوع هواپیما</label>
+				@{ 
+					var AirPlane = db.AirPlanes.Where(s => s.Id == Model.AirPlaneCode).FirstOrDefault();
+				}
+				@if(AirPlane !=null)
+				{
+			<p>@AirPlane.airPlaneModel </p>
+
+				}
+
+
+
+				<label style="float:right">قیمت</label>
+				<p>@Model.Price تومان</p>
+
+			</div>
+		
+		</div>
+	
+	</div>
+</div>
+
+<p>
+	<a style="font-family:Tahoma,'B Yekan';margin-top:20px;" class="btn btn-danger" href="/Home/Index"> انصراف</a>
+	<a style="font-family:Tahoma,'B Yekan';margin-top:20px;" class="btn btn-success" href="/TicketInfo/AcceptAndCountinue/@Model.Id"> تایید و ادامه</a>
+
+</p>

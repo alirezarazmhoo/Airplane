@@ -1,0 +1,70 @@
+﻿@model AirAjencyy.Models.AirPlane
+
+@{
+	ViewBag.Title = "Edit";
+	Layout = "~/Areas/Admin/Views/Shared/_Master.cshtml";
+}
+
+
+
+
+@using ((Html.BeginForm("Edit",
+						"AirPlanes",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+	@Html.AntiForgeryToken()
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+
+				<div class="text-center text-blue" style="border-style:solid;">
+					<h2>ثبت هواپیما</h2>
+				</div>
+
+				<div class="form-horizontal">
+
+					<hr />
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+					@Html.HiddenFor(model => model.Id)
+
+					<div class="form-group" style="margin-left:100px;">
+						@Html.LabelFor(model => model.airPlaneModel, htmlAttributes: new { @class = "control-label col-md-2" })
+						<div class="col-md-10">
+							@Html.EditorFor(model => model.airPlaneModel, new { htmlAttributes = new { @class = "form-control",@style="width:50%" } })
+							@Html.ValidationMessageFor(model => model.airPlaneModel, "", new { @class = "text-danger" })
+						</div>
+					</div>
+
+					<div class="form-group" style="margin-left:100px;">
+						@Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+						<input style="width:50%;margin-right:50px" name="Main_Image" type="file" class="form-control" id="Main_Image_Upload" onchange="setImage()">
+						<br />
+						<img alt="بدون تصویر" id="Main_Image_Show" style="width:150px;height:150px;margin-right:50px" src="~/Upload/Plane/@Model.ImageUrl" />
+					</div>
+
+					<div class="form-group" style="margin-left:90%;">
+						<div class="col-md-offset-2 col-md-10">
+							<input type="submit" value="ثبت" class="btn btn-success" style="margin-bottom:5px;" />
+						</div>
+						<p class="text-danger" style="margin-right:20px;">
+							@TempData["ErrorAirPlane"]
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+
+<script>
+
+	function setImage() {
+
+		var myURL = window.URL || window.webkitURL;
+		var fileURL = myURL.createObjectURL(Main_Image_Upload.files[0]);
+		Main_Image_Show.src = fileURL;
+	}
+</script>
+<div>
+	<a class="btn btn-warning" href="/Admin/AirPlanes/Index"> بازگشت</a>
+</div>
