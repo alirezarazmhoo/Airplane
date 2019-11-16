@@ -29,6 +29,8 @@ namespace AirAjencyy.Models
 		[DisplayName("توضیحات کلی")]
 		public string Descriptions { get; set; }
 		[DisplayName("قیمت")]
+		[Required(ErrorMessage = "قیمت الزامی است")]
+
 		public long Price { get; set; }
 		[DisplayName("کشور مقصد")]
 		public int CountryDestinationCode { get; set; }

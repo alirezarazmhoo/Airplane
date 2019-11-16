@@ -40,7 +40,11 @@ namespace AirAjencyy.Areas.Admin.Controllers.PlaneTickets
 
 
 
-				var _planeTickets =await db.PlaneTickets.Include(p => p.CountryOrigin).Where(s=>s.Price == price || s.Type == Type || s.TakeOffDate == TakeOffDate || s.CountryOriginID == OriginCountryCode || s.CityOriginCode == OriginCityCode || s.CountryDestinationCode == DestinyCountryCode || s.CityDestinationID == DestinyCityCode).ToListAsync();
+				//var _planeTickets =await db.PlaneTickets.Include(p => p.CountryOrigin).Where(s=>s.Price == price || s.Type == Type || s.TakeOffDate == TakeOffDate || s.CountryOriginID == OriginCountryCode || s.CityOriginCode == OriginCityCode || s.CountryDestinationCode == DestinyCountryCode || s.CityDestinationID == DestinyCityCode).ToListAsync();
+
+				var _planeTickets = await db.PlaneTickets.Include(p => p.CountryOrigin).Where(s=>s.Type == Type).Where(s=>s.TakeOffDate == TakeOffDate).Where(s=>s.Price == price || s.CountryOriginID == OriginCountryCode || s.CityOriginCode == OriginCityCode || s.CountryDestinationCode == DestinyCountryCode || s.CityDestinationID == DestinyCityCode).ToListAsync();
+
+
 
 
 				return View(_planeTickets);

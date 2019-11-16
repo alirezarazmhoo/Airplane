@@ -29,72 +29,79 @@
 						"PlaneTickets",
 						FormMethod.Post, new { enctype = "multipart/form-data" })))
 {
-<div class="row">
-	<input style="display:none" value="1" name="hasSearch"/>
-	<input class="form-control" name="price" style="width:40%;margin-right:35px;" placeholder="براساس قیمت" />
-	<div class="form-group">
+	<div class="row">
+		<input style="display:none" value="1" name="hasSearch" />
+		<input class="form-control" name="price" style="width:40%;margin-right:35px;" placeholder="براساس قیمت" />
+		<div class="form-group">
 
-		<div class="col-md-10">
-			<select class="form-control" style="width:50%;margin-top:5px;margin-right:20px;" name="Type">
-				<option value="0">داخلی</option>
-				<option value="1">خارجی</option>
+			<div class="col-md-10">
+				<select class="form-control" style="width:50%;margin-top:5px;margin-right:20px;" name="Type">
+					<option value="0">داخلی</option>
+					<option value="1">خارجی</option>
 
-			</select>
+				</select>
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
+		<div class="form-group">
 
-		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
-			<input required name="TakeOffDate" id="TakeOffDate" class="form-control" style="width:50%" placeholder="تاریخ" />
+			<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+				<input required name="TakeOffDate" id="TakeOffDate" class="form-control" style="width:50%" placeholder="تاریخ" />
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+				<label>کشورمبدا:</label>
+				<select class="form-control" style="width:50%" name="OriginCountryCode">
+					@foreach (var item in listCountry)
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+				<label>شهرمبدا:</label>
+				<select class="form-control" style="width:50%" name="OriginCityCode">
+					@foreach (var item in listCity)
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+				<label>کشورمقصد:</label>
+				<select class="form-control" style="width:50%" name="DestinyCountryCode">
+					@foreach (var item in listCountry)
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
+				<label>استان مقصد:</label>
+				<select class="form-control" style="width:50%" name="DestinyCityCode">
+					@foreach (var item in listCity)
+					{
+						<option value="@item.Id">@item.Name</option>
+					}
+				</select>
+			</div>
 		</div>
 	</div>
-	<div class="form-group">
-		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
-			<label>کشورمبدا:</label>
-			<select class="form-control" style="width:50%" name="OriginCountryCode">
-				@foreach (var item in listCountry)
-				{
-					<option value="@item.Id">@item.Name</option>
-				}
-			</select>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
-			<label>شهرمبدا:</label>
-			<select class="form-control" style="width:50%" name="OriginCityCode">
-				@foreach (var item in listCity)
-				{
-					<option value="@item.Id">@item.Name</option>
-				}
-			</select>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
-			<label>کشورمقصد:</label>
-			<select class="form-control" style="width:50%" name="DestinyCountryCode">
-				@foreach (var item in listCountry)
-				{
-					<option value="@item.Id">@item.Name</option>
-				}
-			</select>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-10" style="width:50%;margin-top:5px;margin-right:20px;">
-			<label>استان مقصد:</label>
-			<select class="form-control" style="width:50%" name="DestinyCityCode">
-				@foreach (var item in listCity)
-				{
-					<option value="@item.Id">@item.Name</option>
-				}
-			</select>
-		</div>
-	</div>
-</div>
 
 	<button type="submit" class="btn btn-primary" style="margin-top:10px">جستجو</button>
+}
+@using ((Html.BeginForm("Index",
+						"PlaneTickets",
+						FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+	<button type="submit" class="btn btn-success" style="margin-top:10px">بارگزاری مجدد</button>
+
 }
 <div class="row">
 	<div class="col-xs-12">
