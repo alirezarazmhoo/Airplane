@@ -18,7 +18,7 @@ namespace AirAjencyy.Controllers
 			{
 				AdminUser user = new AdminUser();
 
-				user.UserName = "Zareyi";
+				user.UserName = "Rahdan";
 				user.Password = "123456";
 				db.AdminUser.Add(user);
 				db.SaveChanges();
